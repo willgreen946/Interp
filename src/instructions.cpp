@@ -35,13 +35,23 @@ namespace inst {
 		return 0;
 	}
 
+	/* Scans a line string input from stdin line */
+	int scan (std::vector<std::string>& args) {
+		std::string line;
+		std::getline(std::cin, line);
+		
+		parser::varmap[args[1]] = line;
+		return 0;
+	}
+
+	/* Jumps to specified line in the file */
 	int jump (std::vector<std::string>& args) {
-		const char *n = args[1].c_str();
+		const char *n = strdup(args[1].c_str());
 		size_t line = 0;
-	
-		while (*n++)
-			if (isdigit(*n)) {
-				std::cerr << "ERROR: call to jmp needs int\n";
+		
+		for (size_t i = 0; args[1][i]; i++)
+			if (!isdigit(args[1][i])) {
+				std::cerr << "ERROR: call to jmp needs interger\n";
 				return 1;
 			}
 

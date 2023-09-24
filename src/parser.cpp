@@ -14,10 +14,11 @@ namespace parser {
 		size_t argc;
 	};
 
-	const size_t imap_max = 6;
+	const size_t imap_max = 7;
 	struct INSTRUCTION_MAP imap[imap_max] = {
 		{ "jmp", inst::jump, 1 },
 		{ "cmp", inst::compare, 3 },
+		{ "_scan", inst::scan, 1 },
 		{ "_print", inst::print, 1},
 		{ "_print_l", inst::print_l, 1},
 		{ "_print_e", inst::print_e, 1},
@@ -82,7 +83,9 @@ namespace parser {
 		if (!parser::valid_argc(argc, imap_index))
 			return 1;
 	
-		parser::imap[imap_index].function(args);	
+		if (parser::imap[imap_index].function(args))
+			return 1;
+
 		return 0;
 	}
 

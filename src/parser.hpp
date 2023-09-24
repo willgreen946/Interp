@@ -7,6 +7,9 @@
 #include <map>
 
 namespace parser {
+	/* A map to hold variables */
+	std::map<std::string, std::string> varmap;
+
 	/* Holds the line number and the line contents */
 	std::map<size_t, std::string> fmap;
 
