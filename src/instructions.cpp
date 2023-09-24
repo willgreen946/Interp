@@ -36,8 +36,17 @@ namespace inst {
 	}
 
 	int jump (std::vector<std::string>& args) {
-		size_t line = atoi(args[0].c_str());
-		parser::read_line(parser::fmap[line], line);
+		const char *n = args[1].c_str();
+		size_t line = 0;
+	
+		while (*n++)
+			if (isdigit(*n)) {
+				std::cerr << "ERROR: call to jmp needs int\n";
+				return 1;
+			}
+
+		line = atoi(n);
+		parser::read_line(parser::fmap[line]);
 		return 0;
 	}
 

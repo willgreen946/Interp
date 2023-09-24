@@ -31,7 +31,7 @@ int read_files (std::string file) {
 
 	for (size_t ln = 0; std::getline(stream, line); ln++) {
 		parser::fmap[ln] = line;
-		if (parser::read_line(line, ln))
+		if (parser::read_line(line))
 			return 1;
 	}
 

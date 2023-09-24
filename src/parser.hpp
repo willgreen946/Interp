@@ -14,7 +14,7 @@ namespace parser {
 	void remove_comments (std::vector<std::string>& line);
 
 	/* Reads a line of input and processes it */
-	int read_line (std::string line, size_t ln);
+	int read_line (std::string line);
 }
 
 #include "parser.cpp"

@@ -57,6 +57,7 @@ namespace parser {
 		size_t imap_argc = parser::imap[imap_index].argc;
 
 		if (imap_argc > argc) {
+			// TODO 
 			std::cerr << "ERROR: Expected " << imap_argc << " args, for " << 
 									" instruction, got "
 									<< argc << '\n';
@@ -85,7 +86,7 @@ namespace parser {
 		return 0;
 	}
 
-	int read_line (std::string line, const size_t ln) {
+	int read_line (std::string line) {
 		std::vector<std::string> args;
 		std::string cmd;
 		size_t imap_index;
