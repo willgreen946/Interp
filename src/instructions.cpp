@@ -7,30 +7,38 @@
 namespace inst {
 	/* Prints to standard out */
 	int print (std::vector<std::string>& args) {
-		for (size_t i = 1; i < args.size(); i++)
+		for (size_t i = 1; i < args.size(); i++) {
 			std::cout << args[i];
+			std::cout << ' ';
+		}
 		return 0;
 	}
 
 	/* Prints to standard out with newline */
 	int print_l (std::vector<std::string>& args) {
-		for (size_t i = 1; i < args.size(); i++)
+		for (size_t i = 1; i < args.size(); i++) {
 			std::cout << args[i];
+			std::cout << ' ';
+		}
 		std::cout << '\n';
 		return 0;
 	}
 
 	/* Prints to standard error stream */
 	int print_e (std::vector<std::string>& args) {
-		for (size_t i = 1; i < args.size(); i++)
+		for (size_t i = 1; i < args.size(); i++) {
 			std::cerr << args[i];
+			std::cerr << ' ';
+		}
 		return 0;
 	}
 
 	/* Prints to standard error stream with newline */
 	int print_el (std::vector<std::string>& args) {
-		for (size_t i = 1; i < args.size(); i++)
+		for (size_t i = 1; i < args.size(); i++) {
 			std::cerr << args[i];
+			std::cerr << ' ';
+		}
 		std::cerr << '\n';
 		return 0;
 	}

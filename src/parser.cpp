@@ -59,6 +59,9 @@ namespace parser {
 	bool valid_argc (size_t argc, size_t imap_index) {
 		size_t imap_argc = parser::imap[imap_index].argc;
 
+		/* If it takes a string as an input allow any size */
+		if (imap[imap_index].type == STRIN) return true;
+
 		if (imap_argc > argc) {
 			// TODO 
 			std::cerr << "ERROR: Expected " << imap_argc << " args, for " << 
@@ -78,6 +81,8 @@ namespace parser {
 		return true;
 	}
 
+	/* Does some checks on the instruction and it's args and makes sure they're
+		* Okay for example arg counts */
 	int get_context (std::vector<std::string> args, size_t imap_index) {
 		size_t argc = args.size() - 1;
 
@@ -100,15 +105,6 @@ namespace parser {
 		return cmd;
 	}
 
-	void trim_whitespace (std::string& str) {
-		std::cout << str << '\n';
-		for (size_t i = 0, k = 0; str[i]; i++) {
-			if (isspace(str[i]))
-				str[k++] = str[i];
-		}	
-		std::cout << str << '\n';
-	}
-	
 	int read_line (std::string line) {
 		std::vector<std::string> args;
 		std::string cmd;
