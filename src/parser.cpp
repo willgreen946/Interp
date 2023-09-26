@@ -18,7 +18,7 @@ namespace parser {
 	const size_t imap_max = 7;
 	struct INSTRUCTION_MAP imap[imap_max] = {
 		{ "jmp", inst::jump, 1, INTIN },
-		{ "cmp", inst::compare, 3, INTIN },
+		{ "cmp", inst::compare, 7, IFIN },
 		{ "_scan", inst::scan, 1, STRIN },
 		{ "_print", inst::print, 1, STRIN },
 		{ "_print_l", inst::print_l, 1, STRIN },
@@ -64,9 +64,7 @@ namespace parser {
 
 		if (imap_argc > argc) {
 			// TODO 
-			std::cerr << "ERROR: Expected " << imap_argc << " args, for " << 
-									" instruction, got "
-									<< argc << '\n';
+			std::cerr << "ERROR: Expected " << imap_argc << " args, for " <<  " instruction, got " << argc << '\n';
 			return false;
 		}
 		
@@ -103,6 +101,19 @@ namespace parser {
 
 		std::getline(iss, cmd, delim);
 		return cmd;
+	}
+
+	/* Gets the type of a variable from a string */
+	parser::type_t get_type (std::string var) {
+		if (!isalpha(var[1]))
+			return CHAR_T;
+
+		for (size_t i = 0; var[i]; i++) {
+			if (isdigit(var[i]))
+				return STRING_T;
+		}
+	
+		return INT_T;
 	}
 
 	int read_line (std::string line) {

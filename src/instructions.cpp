@@ -54,7 +54,6 @@ namespace inst {
 
 	/* Jumps to specified line in the file */
 	int jump (std::vector<std::string>& args) {
-		int ret;
 		size_t line = 0;
 
 		for (size_t i = 0; args[1][i]; i++)	
@@ -69,6 +68,31 @@ namespace inst {
 	}
 
 	int compare (std::vector<std::string>& args) {
+		std::string first, oper, last, true_stat, false_stat;
+		parser::type_t first_type, last_type;
+	
+		/* Assign the first variable the second and the operator */	
+		first = args[1];
+		oper = args[2];
+		last = args[3];
+
+		/* Assign the truth statment and the false statment */
+		true_stat = args[5];
+		false_stat = args[7]; 
+
+		std::cout << first << '\n' << oper << '\n' << last << '\n';
+		std::cout << "if true " << true_stat << '\n' << "if false " << false_stat << '\n';
+
+		/* Determine the types of the first & last arg */
+		first_type = parser::get_type(first);
+		last_type = parser::get_type(last);
+
+		if (first_type != last_type) {
+			std::cerr << "ERROR: Cannot compare type "
+				<< first_type << " to type " << last_type << '\n';
+			return 1;
+		}
+
 		return 0;
 	}
 }
