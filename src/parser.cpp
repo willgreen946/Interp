@@ -12,19 +12,21 @@ namespace parser {
 		std::string instruction;
 		int (*function)(std::vector<std::string>& args);
 		size_t argc;
+		parser::type_t type;
 	};
 
 	const size_t imap_max = 7;
 	struct INSTRUCTION_MAP imap[imap_max] = {
-		{ "jmp", inst::jump, 1 },
-		{ "cmp", inst::compare, 3 },
-		{ "_scan", inst::scan, 1 },
-		{ "_print", inst::print, 1},
-		{ "_print_l", inst::print_l, 1},
-		{ "_print_e", inst::print_e, 1},
-		{ "_print_el", inst::print_el, 1 },
+		{ "jmp", inst::jump, 1, INTIN },
+		{ "cmp", inst::compare, 3, INTIN },
+		{ "_scan", inst::scan, 1, STRIN },
+		{ "_print", inst::print, 1, STRIN },
+		{ "_print_l", inst::print_l, 1, STRIN },
+		{ "_print_e", inst::print_e, 1, STRIN },
+		{ "_print_el", inst::print_el, 1, STRIN },
 	};
 
+  /* Splits up a string by the delim character */
 	std::vector<std::string> split_string (std::string line, const char delim) {
 		std::vector<std::string> vec;
 		std::istringstream iss(line);
@@ -82,18 +84,39 @@ namespace parser {
 		/* Make sure the arg counts match */
 		if (!parser::valid_argc(argc, imap_index))
 			return 1;
-	
+
 		if (parser::imap[imap_index].function(args))
 			return 1;
 
 		return 0;
 	}
 
+	/* Gets first word in string by delim character */
+	std::string get_first (std::string line, const char delim) {
+		std::string cmd;
+		std::istringstream iss(line);
+
+		std::getline(iss, cmd, delim);
+		return cmd;
+	}
+
+	void trim_whitespace (std::string& str) {
+		std::cout << str << '\n';
+		for (size_t i = 0, k = 0; str[i]; i++) {
+			if (isspace(str[i]))
+				str[k++] = str[i];
+		}	
+		std::cout << str << '\n';
+	}
+	
 	int read_line (std::string line) {
 		std::vector<std::string> args;
 		std::string cmd;
 		size_t imap_index;
-
+	
+		/* Getting the instruction(cmd) and the args
+		 * the arg[0] is the cmd with the : char */
+		cmd = parser::get_first(line, ':');
 		args = parser::split_string(line, ' ');
 
 		/* Do nothing if it's a comment */
@@ -101,7 +124,6 @@ namespace parser {
 			return 0;
 
 		parser::remove_comments(args);
-		cmd = args[0];
 
 		/* Make sure the instruction is valid */
 		if ((imap_index = is_instruction(cmd)) == -1) {

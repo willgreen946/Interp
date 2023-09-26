@@ -46,16 +46,16 @@ namespace inst {
 
 	/* Jumps to specified line in the file */
 	int jump (std::vector<std::string>& args) {
-		const char *n = strdup(args[1].c_str());
+		int ret;
 		size_t line = 0;
-		
-		for (size_t i = 0; args[1][i]; i++)
+
+		for (size_t i = 0; args[1][i]; i++)	
 			if (!isdigit(args[1][i])) {
 				std::cerr << "ERROR: call to jmp needs interger\n";
 				return 1;
 			}
 
-		line = atoi(n);
+		line = atoi(args[1].c_str());
 		parser::read_line(parser::fmap[line]);
 		return 0;
 	}
